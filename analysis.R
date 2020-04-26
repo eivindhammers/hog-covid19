@@ -6,12 +6,8 @@ library(directlabels)
 library(data.table)
 library(countrycode)
 
-setwd("~/Dropbox/Forskning/Covid-19")
-
-vdem <- fread("data/Country_Year_V-Dem_Full+others_CSV_v10/V-Dem-CY-Full+Others-v10.csv") %>%
-  tibble(.) %>%
+vdem <- readRDS("vdem.rds") %>%
   mutate(ccode = countrycode(COWcode, "cown", "iso3c")) %>%
-  select(ccode, country_name, year, v2exfemhog, v2x_libdem) %>%
   filter(!is.na(v2exfemhog))
 
 covid_raw <- fread("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv", na = "") %>%
